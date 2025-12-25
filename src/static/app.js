@@ -555,16 +555,16 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="share-buttons-container">
         <span class="share-label">Share:</span>
         <div class="share-buttons">
-          <button class="share-button facebook" data-activity="${name}" data-platform="facebook" title="Share on Facebook">
+          <button class="share-button facebook" data-activity="${name}" data-platform="facebook" title="Share on Facebook" aria-label="Share on Facebook">
             📘
           </button>
-          <button class="share-button twitter" data-activity="${name}" data-platform="twitter" title="Share on X (Twitter)">
+          <button class="share-button twitter" data-activity="${name}" data-platform="twitter" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">
             𝕏
           </button>
-          <button class="share-button email" data-activity="${name}" data-platform="email" title="Share via Email">
+          <button class="share-button email" data-activity="${name}" data-platform="email" title="Share via Email" aria-label="Share via Email">
             ✉️
           </button>
-          <button class="share-button copy-link" data-activity="${name}" data-platform="copy" title="Copy Link">
+          <button class="share-button copy-link" data-activity="${name}" data-platform="copy" title="Copy Link" aria-label="Copy activity details to clipboard">
             🔗
           </button>
         </div>
@@ -792,13 +792,13 @@ document.addEventListener("DOMContentLoaded", () => {
       case 'facebook':
         // Facebook sharing
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(fullText)}`;
-        window.open(facebookUrl, '_blank', 'width=600,height=400');
+        window.open(facebookUrl, '_blank', 'width=600,height=400,noopener,noreferrer');
         break;
         
       case 'twitter':
         // Twitter/X sharing
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}&url=${encodeURIComponent(url)}`;
-        window.open(twitterUrl, '_blank', 'width=600,height=400');
+        window.open(twitterUrl, '_blank', 'width=600,height=400,noopener,noreferrer');
         break;
         
       case 'email':
@@ -833,7 +833,8 @@ document.addEventListener("DOMContentLoaded", () => {
               showMessage('Failed to copy link. Please try again.', 'error');
             });
         } else {
-          // Fallback for older browsers
+          // Fallback for older browsers that don't support Clipboard API
+          // Using deprecated document.execCommand('copy') for legacy browser compatibility
           const textArea = document.createElement('textarea');
           textArea.value = shareText;
           textArea.style.position = 'fixed';
