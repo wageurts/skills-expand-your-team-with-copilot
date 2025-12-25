@@ -792,13 +792,19 @@ document.addEventListener("DOMContentLoaded", () => {
       case 'facebook':
         // Facebook sharing
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(fullText)}`;
-        window.open(facebookUrl, '_blank', 'width=600,height=400,noopener,noreferrer');
+        const facebookWindow = window.open(facebookUrl, '_blank', 'width=600,height=400');
+        if (facebookWindow) {
+          facebookWindow.opener = null;
+        }
         break;
         
       case 'twitter':
         // Twitter/X sharing
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}&url=${encodeURIComponent(url)}`;
-        window.open(twitterUrl, '_blank', 'width=600,height=400,noopener,noreferrer');
+        const twitterWindow = window.open(twitterUrl, '_blank', 'width=600,height=400');
+        if (twitterWindow) {
+          twitterWindow.opener = null;
+        }
         break;
         
       case 'email':
@@ -834,7 +840,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         } else {
           // Fallback for older browsers that don't support Clipboard API
-          // Using deprecated document.execCommand('copy') for legacy browser compatibility
+          // Using document.execCommand('copy') as fallback - this method was deprecated 
+          // in favor of the Clipboard API but provides compatibility for older browsers
           const textArea = document.createElement('textarea');
           textArea.value = shareText;
           textArea.style.position = 'fixed';
