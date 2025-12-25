@@ -581,7 +581,8 @@ footer {
 
 .category-filter,
 .day-filter,
-.time-filter {
+.time-filter,
+.difficulty-filter {
   background-color: var(--background);
   border: 1px solid var(--border);
   color: var(--text-primary);
@@ -594,7 +595,8 @@ footer {
 
 .category-filter.active,
 .day-filter.active,
-.time-filter.active {
+.time-filter.active,
+.difficulty-filter.active {
   background-color: var(--primary);
   color: white;
   border-color: var(--primary-dark);
@@ -602,13 +604,49 @@ footer {
 
 .category-filter:hover,
 .day-filter:hover,
-.time-filter:hover {
+.time-filter:hover,
+.difficulty-filter:hover {
   background-color: var(--primary-light);
   color: white;
 }
 
 .time-filters {
   width: 100%;
+}
+
+/* Difficulty filters */
+.difficulty-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Difficulty badge on activity cards */
+.difficulty-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-badge.difficulty-beginner {
+  background-color: #4caf50;
+  color: white;
+}
+
+.difficulty-badge.difficulty-intermediate {
+  background-color: #ff9800;
+  color: white;
+}
+
+.difficulty-badge.difficulty-advanced {
+  background-color: #f44336;
+  color: white;
 }
 
 .reset-button {
