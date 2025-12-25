@@ -400,8 +400,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Note: difficulty filtering is handled client-side in displayFilteredActivities()
-
       const queryString =
         queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
       const response = await fetch(`/activities${queryString}`);
@@ -410,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save the activities data
       allActivities = activities;
 
-      // Apply search and filter, and handle weekend filter in client
+      // Apply client-side filters (category, difficulty, weekend, search)
       displayFilteredActivities();
     } catch (error) {
       activitiesList.innerHTML =
@@ -424,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear the activities list
     activitiesList.innerHTML = "";
 
-    // Apply client-side filtering - this handles category, difficulty, search, and weekend filters
+    // Apply client-side filtering: category, difficulty, weekend, and search
     let filteredActivities = {};
 
     Object.entries(allActivities).forEach(([name, details]) => {
