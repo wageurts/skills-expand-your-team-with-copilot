@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return "academic";
   }
 
-  // Function to fetch activities from API with optional day, time, and difficulty filters
+  // Function to fetch activities from API with optional day and time filters
   async function fetchActivities() {
     // Show loading skeletons first
     showLoadingSkeletons();
@@ -394,10 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Handle difficulty filter
-      if (currentDifficulty) {
-        queryParams.push(`difficulty=${encodeURIComponent(currentDifficulty)}`);
-      }
+      // Note: difficulty filtering is handled client-side in displayFilteredActivities()
 
       const queryString =
         queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
@@ -421,7 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear the activities list
     activitiesList.innerHTML = "";
 
-    // Apply client-side filtering - this handles category filter and search, plus weekend filter
+    // Apply client-side filtering - this handles category, difficulty, search, and weekend filters
     let filteredActivities = {};
 
     Object.entries(allActivities).forEach(([name, details]) => {
@@ -430,6 +427,21 @@ document.addEventListener("DOMContentLoaded", () => {
       // Apply category filter
       if (currentFilter !== "all" && activityType !== currentFilter) {
         return;
+      }
+
+      // Apply difficulty filter
+      if (currentDifficulty) {
+        if (currentDifficulty === "All") {
+          // "All" means show only activities without difficulty specified
+          if (details.difficulty) {
+            return;
+          }
+        } else {
+          // Filter by specific difficulty level
+          if (details.difficulty !== currentDifficulty) {
+            return;
+          }
+        }
       }
 
       // Apply weekend filter if selected
@@ -663,9 +675,9 @@ document.addEventListener("DOMContentLoaded", () => {
       difficultyFilters.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      // Update current difficulty filter and fetch activities
+      // Update current difficulty filter and display filtered activities
       currentDifficulty = button.dataset.difficulty;
-      fetchActivities();
+      displayFilteredActivities();
     });
   });
 
